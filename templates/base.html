@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Accionistas - Minera Fidami S.A.</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <style>
+      body {
+        background-color: #101820;
+      }
+      .main-navbar {
+        background: #232b32;
+        border-radius: 2.5rem;
+        margin: 2rem auto 2.5rem auto;
+        max-width: 1200px;
+        box-shadow: 0 2px 16px 0 rgba(0,0,0,0.10);
+        padding: 0.3rem 2.5rem;
+        position: relative;
+      }
+      .main-navbar .navbar-brand {
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+        margin-right: 2.5rem;
+      }
+      .main-navbar .navbar-nav .nav-link {
+        color: #fff;
+        font-weight: 400;
+        font-size: 1.08rem;
+        margin: 0 0.7rem;
+        transition: color 0.2s;
+      }
+      .main-navbar .navbar-nav .nav-link.active, .main-navbar .navbar-nav .nav-link:hover {
+        color: #f2c744;
+      }
+      .main-navbar .navbar-btn {
+        background: #f2c744;
+        color: #232b32;
+        border-radius: 2rem;
+        font-weight: 600;
+        padding: 0.5rem 1.5rem;
+        font-size: 1rem;
+        border: none;
+        margin-left: 1.5rem;
+        transition: background 0.2s, color 0.2s;
+      }
+      .main-navbar .navbar-btn:hover {
+        background: #fff;
+        color: #232b32;
+      }
+      @media (max-width: 991px) {
+        .main-navbar { padding: 0.3rem 1rem; }
+        .main-navbar .navbar-brand { margin-right: 1rem; }
+      }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg main-navbar">
+  <div class="container-fluid p-0">
+    <a class="navbar-brand" href="/dashboard/">FIDAMI</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      {% if user.is_authenticated %}
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link {% if request.path == '/dashboard/' %}active{% endif %}" href="/dashboard/">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.path == '/portafolio/' %}active{% endif %}" href="/portafolio/">Portafolio</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.path == '/noticias/' %}active{% endif %}" href="/noticias/">Noticias</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.path == '/informes/' %}active{% endif %}" href="/informes/">Informes</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.path == '/documentos/' %}active{% endif %}" href="/documentos/">Documentos</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.path == '/soporte/' %}active{% endif %}" href="/soporte/">Soporte</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.path == '/configuracion/' %}active{% endif %}" href="/configuracion/">Perfil</a></li>
+        {% if user.is_superuser or user.rol == 'admin' %}
+        <li class="nav-item"><a class="nav-link {% if request.path == '/configuracion/administrar/' %}active{% endif %}" href="/configuracion/administrar/">Administrar</a></li>
+        {% endif %}
+      </ul>
+      <div class="d-flex align-items-center ms-lg-3 mt-2 mt-lg-0">
+        <a href="/logout/" class="navbar-btn">Cerrar sesión</a>
+      </div>
+      {% else %}
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Inicio</a></li>
+      </ul>
+      <div class="d-flex align-items-center ms-lg-3 mt-2 mt-lg-0">
+        <a href="/login/" class="navbar-btn">Iniciar sesión</a>
+        <a href="/registro/" class="navbar-btn ms-2">Registrarse</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+<div class="container-fluid p-0">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+    {% block content %}{% endblock %}
+</div>
+<!-- Footer moderno -->
+<footer class="mt-5 pt-5" style="background: #0d161c; color: #b0b8c1; border-top: 1px solid #232b32;">
+  <div class="container pb-4">
+    <div class="row gy-4">
+      <div class="col-md-4">
+        <h4 class="fw-bold text-white mb-2">FIDAMI</h4>
+        <p>Cuidamos tu inversión. Portal exclusivo para accionistas de Minera Fidami S.A. Accede a información, reportes y soporte de manera segura y moderna.</p>
+        <div class="d-flex gap-3 mt-3">
+          {% if contacto_config.facebook %}<a href="{{ contacto_config.facebook }}" class="text-white-50 fs-4" target="_blank"><i class="bi bi-facebook"></i></a>{% endif %}
+          {% if contacto_config.instagram %}<a href="{{ contacto_config.instagram }}" class="text-white-50 fs-4" target="_blank"><i class="bi bi-instagram"></i></a>{% endif %}
+          {% if contacto_config.linkedin %}<a href="{{ contacto_config.linkedin }}" class="text-white-50 fs-4" target="_blank"><i class="bi bi-linkedin"></i></a>{% endif %}
+          {% if contacto_config.whatsapp %}<a href="https://wa.me/{{ contacto_config.whatsapp }}?text=Hola%2C%20quisiera%20informacion%20sobre" class="text-white-50 fs-4" target="_blank"><i class="bi bi-whatsapp"></i></a>{% endif %}
+          {% if contacto_config.twitter %}<a href="{{ contacto_config.twitter }}" class="text-white-50 fs-4" target="_blank"><i class="bi bi-twitter"></i></a>{% endif %}
+        </div>
+      </div>
+      <div class="col-md-2">
+        <h6 class="fw-bold text-white mb-3">Enlaces útiles</h6>
+        <ul class="list-unstyled">
+          <li><a href="/" class="text-white-50 text-decoration-none">Inicio</a></li>
+          <li><a href="/portafolio/" class="text-white-50 text-decoration-none">Portafolio</a></li>
+          <li><a href="/noticias/" class="text-white-50 text-decoration-none">Noticias</a></li>
+          <li><a href="/informes/" class="text-white-50 text-decoration-none">Informes</a></li>
+          <li><a href="/documentos/" class="text-white-50 text-decoration-none">Documentos</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h6 class="fw-bold text-white mb-3">Soporte</h6>
+        <ul class="list-unstyled">
+          <li><a href="/soporte/" class="text-white-50 text-decoration-none">Contacto</a></li>
+          <li><a href="/configuracion/" class="text-white-50 text-decoration-none">Perfil</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h6 class="fw-bold text-white mb-3">Contáctanos</h6>
+        <p class="mb-1"><i class="bi bi-geo-alt-fill me-2"></i> {{ contacto_config.direccion|default:'-' }}</p>
+        <p class="mb-1"><i class="bi bi-envelope-fill me-2"></i> {{ contacto_config.email|default:'-' }}</p>
+        <p class="mb-1"><i class="bi bi-telephone-fill me-2"></i> {{ contacto_config.telefono|default:'-' }}</p>
+      </div>
+    </div>
+    <hr class="my-4" style="border-color: #232b32;">
+    <div class="row">
+      <div class="col text-center small">
+        &copy; {{ now|date:'Y' }} <span class="fw-bold">DERECHOS RESERVADOS MINERA FIDAMI S.A.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+{% if contacto_config.whatsapp %}
+<a href="https://wa.me/{{ contacto_config.whatsapp }}?text=Hola%2C%20quisiera%20informacion%20sobre" target="_blank" title="Chatea con nosotros por WhatsApp" style="position:fixed;bottom:24px;right:24px;z-index:9999;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="width:56px;height:56px;">
+</a>
+{% endif %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

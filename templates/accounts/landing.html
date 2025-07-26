@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  body.landing-bg {
+    background: #101820;
+    background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 40px);
+  }
+  .landing-hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .landing-title {
+    color: #fff;
+    font-size: 3.2rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+  }
+  .landing-sub {
+    color: #f2c744;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 1.2rem;
+  }
+  .landing-desc {
+    color: #b0b8c1;
+    font-size: 1.1rem;
+    margin-bottom: 2.2rem;
+    max-width: 520px;
+  }
+  .landing-btn {
+    background: #f2c744;
+    color: #181f2a;
+    border-radius: 2rem;
+    font-weight: 700;
+    padding: 0.8rem 2.2rem;
+    font-size: 1.1rem;
+    border: none;
+    margin-right: 1rem;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: 0 2px 8px 0 rgba(242,199,68,0.10);
+  }
+  .landing-btn:hover {
+    background: #fff;
+    color: #181f2a;
+  }
+  .landing-img {
+    max-width: 700px;
+    min-width: 350px;
+    width: 100%;
+    height: auto;
+    min-height: 320px;
+    max-height: 480px;
+    object-fit: cover;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px 0 rgba(242,199,68,0.10);
+    position: relative;
+    z-index: 1;
+  }
+  .landing-list {
+    color: #b0b8c1;
+    font-size: 1.05rem;
+    margin-top: 2.2rem;
+    margin-bottom: 0;
+    padding-left: 1.2rem;
+  }
+  .landing-list li {
+    margin-bottom: 0.5rem;
+    list-style: disc;
+  }
+  @media (max-width: 991px) {
+    .landing-hero { flex-direction: column; text-align: center; }
+    .landing-img { margin-top: 2.5rem; }
+  }
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.body.classList.add('landing-bg');
+  });
+</script>
+<div class="container landing-hero">
+  <div class="col-lg-6 d-flex flex-column justify-content-center align-items-start">
+    <div class="landing-sub">PORTAL DE ACCIONISTAS</div>
+    <div class="landing-title">Bienvenido a Minera Fidami S.A.</div>
+    <div class="landing-desc">
+      Accede a tu portafolio, consulta informes financieros, mantente informado sobre las últimas noticias y participa en la gestión de la empresa de manera segura y moderna.
+    </div>
+    <div class="mb-4">
+      <a href="/login/" class="landing-btn">Iniciar sesión</a>
+      <a href="/registro/" class="landing-btn" style="background:#232b32;color:#fff;">Registrarse</a>
+    </div>
+    <h5 class="text-white mt-2 mb-2">¿Por qué usar nuestro portal?</h5>
+    <ul class="landing-list">
+      <li>Acceso seguro y privado a tu información como accionista.</li>
+      <li>Consulta de informes y documentos legales.</li>
+      <li>Noticias y eventos exclusivos para accionistas.</li>
+      <li>Soporte y comunicación directa con la empresa.</li>
+    </ul>
+  </div>
+  <div class="col-lg-6 d-flex justify-content-center align-items-center mt-4 mt-lg-0">
+    <img src="{{ imagen_fondo_dashboard|default:'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80' }}" alt="Minería" class="landing-img">
+  </div>
+</div>
+{% endblock %} 

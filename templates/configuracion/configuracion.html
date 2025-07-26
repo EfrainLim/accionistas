@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+  .config-form label {
+    color: #222 !important;
+  }
+  .config-form input, .config-form select, .config-form textarea {
+    color: #222 !important;
+    background: #fff !important;
+    border: 1px solid #bbb;
+  }
+  .config-form .helptext, .config-form .text-danger, .config-form .errorlist, .config-form ul.errorlist li,
+  .config-form .form-text, .config-form .invalid-feedback, .config-form .valid-feedback,
+  .config-form .password-help, .config-form .form-group .help-block {
+    color: #222 !important;
+    background: transparent !important;
+    font-size: 0.97rem;
+    opacity: 1 !important;
+    text-shadow: none !important;
+  }
+</style>
+<div class="container py-5">
+  <h2 class="fw-bold mb-4 text-white"><i class="bi bi-person-circle"></i> Configuración de Perfil y Notificaciones</h2>
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+          <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-person-lines-fill"></i> Editar Perfil</h5>
+          <form method="post" class="config-form">
+            {% csrf_token %}
+            {{ perfil_form|crispy }}
+            <button type="submit" name="perfil_submit" class="btn btn-success w-100 mt-2">Guardar Cambios</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+          <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-key"></i> Cambiar Contraseña</h5>
+          <form method="post" class="config-form">
+            {% csrf_token %}
+            {{ password_form|crispy }}
+            <button type="submit" name="password_submit" class="btn btn-warning w-100 mt-2">Actualizar Contraseña</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} 

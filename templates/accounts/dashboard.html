@@ -1,0 +1,287 @@
+{% extends 'base.html' %}
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<style>
+  body.dashboard-bg {
+    background: #101820;
+    background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 40px);
+  }
+  .dashboard-hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dashboard-title {
+    color: #fff;
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+  }
+  .dashboard-sub {
+    color: #f2c744;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 1.2rem;
+  }
+  .dashboard-desc {
+    color: #b0b8c1;
+    font-size: 1.1rem;
+    margin-bottom: 2.2rem;
+    max-width: 520px;
+  }
+  .dashboard-btn {
+    background: #f2c744;
+    color: #181f2a;
+    border-radius: 2rem;
+    font-weight: 700;
+    padding: 0.8rem 2.2rem;
+    font-size: 1.1rem;
+    border: none;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: 0 2px 8px 0 rgba(242,199,68,0.10);
+  }
+  .dashboard-btn:hover {
+    background: #fff;
+    color: #181f2a;
+  }
+  .dashboard-img {
+    max-width: 700px;
+    min-width: 350px;
+    width: 100%;
+    height: auto;
+    min-height: 320px;
+    max-height: 480px;
+    object-fit: cover;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px 0 rgba(242,199,68,0.10);
+    position: relative;
+    z-index: 1;
+    animation: kenburns-zoom 18s ease-in-out infinite alternate;
+  }
+  @keyframes kenburns-zoom {
+    0% {
+      transform: scale(1) translateY(0);
+    }
+    100% {
+      transform: scale(1.13) translateY(-12px);
+    }
+  }
+  .dashboard-stat-card {
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    background: rgba(24,31,42,0.95);
+    color: #fff;
+    border-radius: 1rem;
+    padding: 1.2rem 2.2rem 1.2rem 1.5rem;
+    box-shadow: 0 2px 16px 0 rgba(0,0,0,0.10);
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    z-index: 2;
+  }
+  .dashboard-stat-card .stat-number {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0;
+    color: #fff;
+  }
+  .dashboard-stat-card .stat-label {
+    font-size: 1rem;
+    color: #b0b8c1;
+    margin-bottom: 0;
+  }
+  @media (max-width: 991px) {
+    .dashboard-hero { flex-direction: column; text-align: center; }
+    .dashboard-img { margin-top: 2.5rem; }
+    .dashboard-stat-card { position: static; margin: 1.5rem auto 0 auto; justify-content: center; }
+  }
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.body.classList.add('dashboard-bg');
+  });
+</script>
+<div class="container dashboard-hero">
+  <div class="col-lg-6 d-flex flex-column justify-content-center align-items-start">
+    <div class="dashboard-sub">MINERA FIDAMI S.A.</div>
+    <div class="dashboard-title">Bienvenido<br>Accionista</div>
+    <div class="dashboard-desc">
+      Accede a tu portafolio, consulta informes financieros, mantente informado sobre las últimas noticias y participa en la gestión de la empresa de manera segura y moderna. ¡Gestiona tu inversión con transparencia y tecnología de punta!
+    </div>
+    <a href="/portafolio/" class="dashboard-btn">Ver mi portafolio &rarr;</a>
+  </div>
+  <div class="col-lg-6 position-relative d-flex justify-content-center align-items-center mt-4 mt-lg-0">
+    <img src="{{ imagen_fondo_dashboard|default:'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80' }}" alt="Fondo Dashboard" class="dashboard-img" style="max-width:700px; min-width:350px; width:100%; height:auto; min-height:320px; max-height:480px; object-fit:cover;">
+    <div class="dashboard-stat-card">
+      <div>
+        <div class="stat-number">{{ portafolio.acciones|default:'0' }}</div>
+        <div class="stat-label">Acciones Totales</div>
+      </div>
+      <span class="ms-2"><i class="bi bi-arrow-up-right-circle-fill" style="color:#f2c744;font-size:2rem;"></i></span>
+    </div>
+  </div>
+</div>
+<!-- Modal Noticia Destacada -->
+{% if noticia_destacada %}
+<div class="modal fade" id="noticiaDestacadaModal" tabindex="-1" aria-labelledby="noticiaDestacadaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content" style="border-radius:1.5rem;">
+      <div class="modal-body p-0">
+        <div class="row g-0 align-items-center">
+          <div class="col-md-5">
+            {% if noticia_destacada.imagen and noticia_destacada.imagen.name %}
+              <img src="{{ noticia_destacada.imagen.url }}" class="img-fluid rounded-start w-100" style="object-fit:cover; min-height:220px; max-height:320px;">
+            {% else %}
+              <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" class="img-fluid rounded-start w-100" style="object-fit:cover; min-height:220px; max-height:320px;">
+            {% endif %}
+          </div>
+          <div class="col-md-7 p-4">
+            <span class="badge bg-warning text-dark mb-2">Destacada</span>
+            <h2 class="fw-bold text-warning mb-2">{{ noticia_destacada.titulo }}</h2>
+            <div class="mb-2 text-secondary small"><i class="bi bi-calendar-event"></i> {{ noticia_destacada.fecha_publicacion|date:'d/m/Y H:i' }}</div>
+            <div class="mb-3 fs-5 text-dark">{{ noticia_destacada.contenido|truncatechars:180 }}</div>
+            <a href="{% url 'noticia_detalle' noticia_destacada.id %}" class="btn btn-warning">Ver detalle</a>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var modal = new bootstrap.Modal(document.getElementById('noticiaDestacadaModal'));
+    modal.show();
+  });
+</script>
+{% endif %}
+<!-- Noticia destacada -->
+{% if noticia_destacada %}
+<div class="container mb-5">
+  <div class="card shadow-lg border-0 bg-dark text-white p-4 mb-4" style="border-radius:1.5rem;">
+    <div class="row g-0 align-items-center">
+      <div class="col-md-4">
+        {% if noticia_destacada.imagen and noticia_destacada.imagen.name %}
+          <img src="{{ noticia_destacada.imagen.url }}" class="img-fluid rounded" style="object-fit:cover; min-height:160px; max-height:220px; width:100%;">
+        {% else %}
+          <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" class="img-fluid rounded" style="object-fit:cover; min-height:160px; max-height:220px; width:100%;">
+        {% endif %}
+      </div>
+      <div class="col-md-8 ps-md-4 mt-3 mt-md-0">
+        <span class="badge bg-warning text-dark mb-2">Destacada</span>
+        <h2 class="fw-bold text-warning mb-2">{{ noticia_destacada.titulo }}</h2>
+        <div class="mb-2 text-light small"><i class="bi bi-calendar-event"></i> {{ noticia_destacada.fecha_publicacion|date:'d/m/Y H:i' }}</div>
+        <div class="mb-3 fs-5">{{ noticia_destacada.contenido|truncatechars:180 }}</div>
+        <a href="{% url 'noticia_detalle' noticia_destacada.id %}" class="btn btn-outline-warning">Ver detalle</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+<!-- Últimas noticias -->
+<div class="container mt-5">
+  <h3 class="fw-bold mb-4 text-white"><i class="bi bi-newspaper"></i> Últimas Noticias</h3>
+  <div class="row g-4">
+    {% for noticia in noticias|slice:':4' %}
+    <div class="col-12 col-md-6 col-lg-3">
+      <div class="card h-100 shadow-sm border-0 bg-dark text-white">
+        {% if noticia.imagen and noticia.imagen.name %}
+          <img src="{{ noticia.imagen.url }}" class="card-img-top" style="object-fit:cover; min-height:120px; max-height:160px;">
+        {% else %}
+          <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" class="card-img-top" style="object-fit:cover; min-height:120px; max-height:160px;">
+        {% endif %}
+        <div class="card-body">
+          <span class="badge bg-success mb-1">{{ noticia.get_categoria_display }}</span>
+          <h5 class="card-title text-warning">{{ noticia.titulo }}</h5>
+          <p class="card-text text-white">{{ noticia.contenido|truncatechars:70 }}</p>
+          <a href="{% url 'noticia_detalle' noticia.id %}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+      <div class="alert alert-info">No hay noticias recientes.</div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="text-end mt-3">
+    <a href="/noticias/" class="btn btn-outline-primary">Ver más noticias</a>
+  </div>
+</div>
+<!-- Últimos informes -->
+<div class="container mt-5">
+  <h3 class="fw-bold mb-4 text-white"><i class="bi bi-file-earmark-bar-graph"></i> Últimos Informes</h3>
+  <div class="row g-4">
+    {% for informe in informes|slice:':4' %}
+    <div class="col-12 col-md-6 col-lg-3">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title mb-2 text-primary">{{ informe.titulo }}</h5>
+          <span class="badge bg-info mb-2">{{ informe.get_tipo_informe_display }} | {{ informe.get_periodicidad_display }}{% if informe.area %} | {{ informe.get_area_display }}{% endif %}</span>
+          <div class="mb-2 text-secondary"><i class="bi bi-calendar-event"></i> {{ informe.fecha_publicacion|date:'d/m/Y' }}</div>
+          <div class="d-flex gap-2 mt-auto">
+            <a href="{% url 'descargar_informe_pdf' informe.pk %}" class="btn btn-outline-secondary" target="_blank">
+              <i class="bi bi-eye"></i> Ver
+            </a>
+            <a href="{% url 'descargar_informe_pdf' informe.pk %}?descargar=1" class="btn btn-outline-primary" target="_blank" download>
+              <i class="bi bi-file-earmark-arrow-down"></i> Descargar PDF
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+      <div class="alert alert-info">No hay informes recientes.</div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="text-end mt-3">
+    <a href="/informes/" class="btn btn-outline-primary">Ver más informes</a>
+  </div>
+</div>
+<!-- Últimos documentos -->
+<div class="container mt-5">
+  <h3 class="fw-bold mb-4 text-white"><i class="bi bi-file-earmark-text"></i> Últimos Documentos</h3>
+  <div class="row g-4">
+    {% for doc in documentos|slice:':4' %}
+    <div class="col-12 col-md-6 col-lg-3 d-flex">
+      <div class="card h-100 shadow-sm border-0 bg-dark text-white w-100">
+        {% if doc.imagen and doc.imagen.name %}
+        <img src="{{ doc.imagen.url }}" class="card-img-top" style="object-fit:cover; min-height:120px; max-height:180px;">
+        {% else %}
+        <div class="d-flex align-items-center justify-content-center bg-secondary" style="min-height:120px; max-height:180px;">
+          <i class="bi bi-file-earmark-text display-1 text-white-50"></i>
+        </div>
+        {% endif %}
+        <div class="card-body d-flex flex-column flex-grow-1">
+          <div class="fw-bold mb-1">{{ doc.titulo }}</div>
+          <span class="badge bg-info mb-2">{{ doc.get_tipo_display }}</span>
+          <div class="mb-2 text-secondary"><i class="bi bi-calendar-event"></i> {{ doc.fecha_publicacion|date:'d/m/Y' }}</div>
+          <div class="d-flex gap-2 mt-auto">
+            <a href="{% url 'descargar_documento_pdf' doc.pk %}" class="btn btn-outline-secondary" target="_blank">
+              <i class="bi bi-eye"></i> Ver
+            </a>
+            <a href="{% url 'descargar_documento_pdf' doc.pk %}?descargar=1" class="btn btn-outline-primary" target="_blank" download>
+              <i class="bi bi-file-earmark-arrow-down"></i> Descargar PDF
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+      <div class="alert alert-info">No hay documentos recientes.</div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="text-end mt-3">
+    <a href="/documentos/" class="btn btn-outline-primary">Ver más documentos</a>
+  </div>
+</div>
+{% endblock %} 

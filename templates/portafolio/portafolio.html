@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<div class="container py-5">
+  <div class="row mb-4">
+    <div class="col-md-6 mb-3">
+      <div class="card shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title text-primary">Total Acciones</h5>
+          <p class="display-5 fw-bold text-primary mb-0">{{ total_acciones }}</p>
+          <small class="text-muted">Suma de todas las acciones</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <div class="card shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title text-success">Total Accionistas</h5>
+          <p class="display-5 fw-bold text-success mb-0">{{ accionistas|length }}</p>
+          <small class="text-muted">Registrados en el sistema</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form method="get" class="mb-4" style="max-width: 260px;">
+    <div class="input-group input-group-sm">
+      <input type="text" name="search" class="form-control" placeholder="Buscar por nombre o DNI..." value="{{ search }}">
+      <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+      {% if search %}
+        <a href="." class="btn btn-outline-secondary btn-sm" title="Quitar búsqueda"><i class="bi bi-x-lg"></i></a>
+      {% endif %}
+    </div>
+  </form>
+  <!-- Lista de accionistas -->
+  <div class="card mt-5">
+    <div class="card-header bg-primary text-white fw-semibold">
+      <i class="bi bi-people"></i> Lista de Accionistas
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th class="text-primary">Nombre Completo</th>
+              <th class="text-primary">DNI</th>
+              <th class="text-primary">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for acc in accionistas %}
+            <tr>
+              <td>{{ acc.nombre }}</td>
+              <td>{{ acc.dni }}</td>
+              <td>{{ acc.acciones }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="3" class="text-center text-muted">No hay accionistas registrados.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} 

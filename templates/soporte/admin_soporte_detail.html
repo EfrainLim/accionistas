@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-info text-white fw-bold">
+          <i class="bi bi-chat-dots"></i> Detalle de Mensaje
+        </div>
+        <div class="card-body">
+          <dl class="row mb-0">
+            <dt class="col-sm-3">Nombre</dt>
+            <dd class="col-sm-9">{{ mensaje.nombre }}</dd>
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">{{ mensaje.email }}</dd>
+            <dt class="col-sm-3">Asunto</dt>
+            <dd class="col-sm-9">{{ mensaje.asunto }}</dd>
+            <dt class="col-sm-3">Mensaje</dt>
+            <dd class="col-sm-9">{{ mensaje.mensaje }}</dd>
+            <dt class="col-sm-3">Fecha</dt>
+            <dd class="col-sm-9">{{ mensaje.fecha|date:'d/m/Y H:i' }}</dd>
+          </dl>
+          <div class="d-flex justify-content-end mt-3">
+            <a href="{% url 'admin_soporte_list' %}" class="btn btn-secondary me-2">Volver</a>
+            <a href="{% url 'admin_soporte_delete' mensaje.pk %}" class="btn btn-danger">Eliminar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} 

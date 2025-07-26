@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  .admin-panel-card {
+    background: #181f2a;
+    border-radius: 1.2rem;
+    box-shadow: 0 2px 16px 0 rgba(0,0,0,0.10);
+    border: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+  .admin-panel-card:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 8px 32px 0 rgba(242,199,68,0.15);
+  }
+  .admin-panel-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #f2c744;
+  }
+  .admin-panel-link {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+  }
+  .admin-panel-link:hover {
+    color: #f2c744;
+  }
+  .admin-panel-section-title {
+    color: #f2c744;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+</style>
+<div class="container py-5">
+  <h2 class="fw-bold mb-5 text-white text-center"><i class="bi bi-tools"></i> Panel de Administración</h2>
+  <div class="row g-4 justify-content-center">
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="admin-panel-card">
+        <a href="/configuracion/administrar/accionistas/" class="admin-panel-link">
+          <span class="admin-panel-icon"><i class="bi bi-people"></i></span>
+          <span class="admin-panel-section-title">Accionistas</span>
+          CRUD Accionistas
+        </a>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="admin-panel-card">
+        <a href="/configuracion/administrar/noticias/" class="admin-panel-link">
+          <span class="admin-panel-icon"><i class="bi bi-newspaper"></i></span>
+          <span class="admin-panel-section-title">Noticias</span>
+          CRUD Noticias
+        </a>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="admin-panel-card">
+        <a href="/configuracion/administrar/informes/" class="admin-panel-link">
+          <span class="admin-panel-icon"><i class="bi bi-file-earmark-bar-graph"></i></span>
+          <span class="admin-panel-section-title">Informes</span>
+          CRUD Informes
+        </a>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="admin-panel-card">
+        <a href="/configuracion/administrar/documentos/" class="admin-panel-link">
+          <span class="admin-panel-icon"><i class="bi bi-file-earmark-text"></i></span>
+          <span class="admin-panel-section-title">Documentos</span>
+          CRUD Documentos
+        </a>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="admin-panel-card">
+        <a href="/configuracion/administrar/soporte/" class="admin-panel-link">
+          <span class="admin-panel-icon"><i class="bi bi-chat-dots"></i></span>
+          <span class="admin-panel-section-title">Soporte</span>
+          CRUD Soporte
+        </a>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="admin-panel-card">
+        <a href="/configuracion/administrar/soporte/configuracion/" class="admin-panel-link text-info">
+          <span class="admin-panel-icon"><i class="bi bi-gear"></i></span>
+          <span class="admin-panel-section-title">Contacto</span>
+          Configuración de Contacto
+        </a>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="admin-panel-card">
+        <a href="/configuracion/administrar/dashboard/" class="admin-panel-link text-warning">
+          <span class="admin-panel-icon"><i class="bi bi-image"></i></span>
+          <span class="admin-panel-section-title">Dashboard</span>
+          Imagen de Fondo
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="alert alert-info text-center">Desde aquí puedes administrar todas las secciones principales del sistema. Haz clic en cada tarjeta para acceder al CRUD correspondiente.</div>
+    </div>
+  </div>
+</div>
+{% endblock %} 

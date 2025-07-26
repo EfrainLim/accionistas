@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<style>
+  body.documentos-bg {
+    background: #101820;
+  }
+  .portfolio-title {
+    color: #fff;
+    letter-spacing: 1px;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .portfolio-sub {
+    color: #f2c744;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+  .portfolio-filters .btn {
+    border-radius: 2rem;
+    font-weight: 500;
+    margin: 0 0.2rem 0.5rem 0.2rem;
+    padding: 0.5rem 1.5rem;
+    background: #181f2a;
+    color: #fff;
+    border: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .portfolio-filters .btn.active, .portfolio-filters .btn:hover {
+    background: #f2c744;
+    color: #181f2a;
+  }
+  .portfolio-card {
+    background: #181f2a;
+    border-radius: 1.2rem;
+    overflow: hidden;
+    box-shadow: 0 2px 16px 0 rgba(0,0,0,0.10);
+    border: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+  }
+  .portfolio-card:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 8px 32px 0 rgba(242,199,68,0.15);
+  }
+  .portfolio-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    background: #222b36;
+  }
+  .portfolio-card-title {
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .portfolio-badge {
+    background: #f2c744;
+    color: #181f2a;
+    border-radius: 1rem;
+    font-size: 0.85rem;
+    padding: 0.2rem 0.8rem;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+  }
+  .portfolio-date {
+    color: #b0b8c1;
+    font-size: 0.95rem;
+    margin-bottom: 0.7rem;
+  }
+  .portfolio-download {
+    background: #f2c744;
+    color: #181f2a;
+    border-radius: 2rem;
+    font-weight: 600;
+    padding: 0.4rem 1.2rem;
+    border: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .portfolio-download:hover {
+    background: #fff;
+    color: #181f2a;
+  }
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.body.classList.add('documentos-bg');
+  });
+</script>
+<div class="container py-5">
+  <div class="portfolio-sub">PORTAFOLIO</div>
+  <div class="portfolio-title mb-4">Documentos Legales y Corporativos</div>
+  <form method="get" class="mb-4 d-flex align-items-center" style="max-width: 340px;">
+    <div class="input-group input-group-sm">
+      <input type="text" name="search" class="form-control" placeholder="Buscar documento..." value="{{ request.GET.search }}">
+      <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+    </div>
+    {% if request.GET.search %}
+      <a href="?{% if tipo_actual %}tipo={{ tipo_actual }}{% endif %}" class="btn btn-outline-secondary btn-sm ms-2" title="Quitar búsqueda"><i class="bi bi-x-lg"></i></a>
+    {% endif %}
+  </form>
+  <div class="mb-4 text-center portfolio-filters">
+    <a href="?" class="btn {% if not tipo_actual %}active{% endif %}">All Projects</a>
+    <a href="?tipo=auditoria" class="btn {% if tipo_actual == 'auditoria' %}active{% endif %}">Auditoría</a>
+    <a href="?tipo=contrato" class="btn {% if tipo_actual == 'contrato' %}active{% endif %}">Contrato</a>
+    <a href="?tipo=estatutario" class="btn {% if tipo_actual == 'estatutario' %}active{% endif %}">Estatuto</a>
+  </div>
+  <!-- Paginación arriba -->
+  {% if page_obj.has_other_pages %}
+  <nav aria-label="Paginación de documentos" class="mb-4">
+    <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search %}&search={{ search }}{% endif %}{% if tipo_actual %}&tipo={{ tipo_actual }}{% endif %}">Anterior</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+      {% endif %}
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <li class="page-item"><a class="page-link" href="?page={{ num }}{% if search %}&search={{ search }}{% endif %}{% if tipo_actual %}&tipo={{ tipo_actual }}{% endif %}">{{ num }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search %}&search={{ search }}{% endif %}{% if tipo_actual %}&tipo={{ tipo_actual }}{% endif %}">Siguiente</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled"><span class="page-link">Siguiente</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+  <div class="row g-4 justify-content-center">
+    {% for doc in documentos %}
+    {% if doc.titulo|lower != 'x' %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex">
+      <div class="portfolio-card w-100">
+        {% if doc.imagen %}
+        <img src="{{ doc.imagen.url }}" class="portfolio-img">
+        {% else %}
+        <div class="d-flex align-items-center justify-content-center portfolio-img">
+          <i class="bi bi-file-earmark-text display-1 text-secondary"></i>
+        </div>
+        {% endif %}
+        <div class="p-3 d-flex flex-column flex-grow-1">
+          <div class="portfolio-card-title">{{ doc.titulo }}</div>
+          <span class="portfolio-badge">{{ doc.get_tipo_display }}</span>
+          <div class="portfolio-date"><i class="bi bi-calendar-event"></i> {{ doc.fecha_publicacion|date:'d/m/Y' }}</div>
+          <div class="d-flex flex-column gap-2 mt-auto">
+            <a href="{% url 'descargar_documento_pdf' doc.pk %}" class="portfolio-download text-decoration-none text-center" target="_blank"><i class="bi bi-eye"></i> Ver</a>
+            <a href="{% url 'descargar_documento_pdf' doc.pk %}?descargar=1" class="portfolio-download text-decoration-none text-center" target="_blank" download><i class="bi bi-file-earmark-arrow-down"></i> Descargar PDF</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% empty %}
+    <div class="col-12">
+      <div class="alert alert-info">No hay documentos disponibles para el filtro seleccionado.</div>
+    </div>
+    {% endfor %}
+  </div>
+  <!-- Paginación abajo -->
+  {% if page_obj.has_other_pages %}
+  <nav aria-label="Paginación de documentos" class="mt-4">
+    <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search %}&search={{ search }}{% endif %}{% if tipo_actual %}&tipo={{ tipo_actual }}{% endif %}">Anterior</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+      {% endif %}
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <li class="page-item"><a class="page-link" href="?page={{ num }}{% if search %}&search={{ search }}{% endif %}{% if tipo_actual %}&tipo={{ tipo_actual }}{% endif %}">{{ num }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search %}&search={{ search }}{% endif %}{% if tipo_actual %}&tipo={{ tipo_actual }}{% endif %}">Siguiente</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled"><span class="page-link">Siguiente</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+</div>
+{% endblock %} 
