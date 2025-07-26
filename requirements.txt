@@ -1,61 +1,13 @@
-# Portal de Accionistas - Minera Fidami S.A.
-# Requirements file for Django project
 
-# Django Framework
 Django==5.2.1
-
-# Database
-# SQLite is included with Python, no additional package needed
-
-# Image Processing
 Pillow==10.4.0
-
-# Forms Enhancement
 django-crispy-forms==2.1
 crispy-bootstrap5==0.7
-
-# Development and Debug
 django-debug-toolbar==4.3.0
-
-# Security
 django-cors-headers==4.3.1
-
-# Environment Variables
 python-decouple==3.8
-
-# Date and Time
 python-dateutil==2.8.2
-
-# File Upload and Storage
 django-storages==1.14.2
-
-# Email (optional, for production)
 django-anymail==10.2
-
-# Production Server
 gunicorn==21.2.0
-
-# Static Files Collection
 whitenoise==6.6.0
-
-# Database (for production, optional)
-# psycopg2-binary==2.9.9  # PostgreSQL
-# mysqlclient==2.2.0      # MySQL
-
-# Development Tools
-# Uncomment for development environment
-# ipython==8.18.1
-# django-extensions==3.2.3
-
-# Testing
-# pytest==7.4.3
-# pytest-django==4.7.0
-
-# Code Quality
-# flake8==6.1.0
-# black==23.11.0
-# isort==5.12.0
-
-# Documentation
-# Sphinx==7.2.6
-# sphinx-rtd-theme==1.3.0 
