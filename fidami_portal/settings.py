@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-*n(*e3t%-+&=&e+-ue-rehmi#!(kclsuvqieas8-e6w11+_h)t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['accionistas.minerafidami.com','www.accionistas.minerafidami.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
