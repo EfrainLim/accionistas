@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-*n(*e3t%-+&=&e+-ue-rehmi#!(kclsuvqieas8-e6w11+_h)t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['accionistas.minerafidami.com','www.accionistas.minerafidami.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['accionistas.minerafidami.com.pe','www.accionistas.minerafidami.com.pe', 'localhost', '127.0.0.1']
 
 
 # Application definition
