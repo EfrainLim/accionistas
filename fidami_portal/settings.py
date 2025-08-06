@@ -28,7 +28,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['accionistas.minerafidami.com.pe','www.accionistas.minerafidami.com.pe', 'localhost', '127.0.0.1']
 
-
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Application definition
 
 INSTALLED_APPS = [
